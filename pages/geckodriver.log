@@ -1,0 +1,5 @@
+1489532075149	geckodriver	INFO	Listening on 127.0.0.1:58039
+1489532075156	mozprofile::profile	INFO	Using profile path /var/folders/9t/95vbmb6s4bd3bgtw0x2kk4mj794qdf/T/rust_mozprofile.n6JaMUlCw6pV
+1489532075157	geckodriver::marionette	INFO	Starting browser /Applications/Firefox.app/Contents/MacOS/firefox-bin
+1489532075216	geckodriver::marionette	INFO	Connecting to Marionette on localhost:58043
+1489532076379	Marionette	INFO	Listening on port 58043
