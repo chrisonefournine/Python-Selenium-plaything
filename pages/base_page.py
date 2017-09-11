@@ -41,3 +41,9 @@ class BasePage():
 
     def _verify_css_value(self, locator, property_name):
         return self._find(locator).value_of_css_property(property_name)
+
+    def _verify_text(self, locator):
+        return self._find(locator).text
+
+
+

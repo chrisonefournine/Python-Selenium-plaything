@@ -15,7 +15,7 @@ def pytest_addoption(parser):
                      help="the name of the browser you want to test with")
     parser.addoption("--host",
                      action="store",
-                     default="browserstack",
+                     default="localhost",
                      help="local host or browserstack")
     parser.addoption("--browserversion",
                      action="store",
@@ -73,7 +73,7 @@ def driver(request):
         driver_ = webdriver.Remote(_url, _desired_caps)
     elif config.host == "localhost":
         if config.browser == "firefox":
-            _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver 3')
+            _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver')
             driver_ = webdriver.Firefox(executable_path=_geckodriver)
         elif config.browser == "chrome":
             _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
