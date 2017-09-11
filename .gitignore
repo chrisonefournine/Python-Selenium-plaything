@@ -1,0 +1,9 @@
+
+.cache/.DS_Store
+.cache/v/cache/lastfailed
+.DS_Store
+*.xml
+*.iml
+*.log
+*.log
+*.pyc
