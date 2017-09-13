@@ -10,6 +10,8 @@ class FileUploadPage(BasePage):
 
     def __init__(self, driver):
         self.driver = driver
+
+    def upload_file(self):
         filename = 'some-file.rtf'
         print ('filename done')
         file = os.path.join(os.getcwd(), filename)
@@ -20,7 +22,7 @@ class FileUploadPage(BasePage):
         print ('submitted')
         self._wait_for_is_displayed(self._uploaded_files, 10)
         print ('uploaded displayed')
-        assert self._verify_text(self._uploaded_files) == filename,"uploaded file should be %s" % filename
+        assert self._verify_text(self._uploaded_files) == filename, "uploaded file should be %s" % filename
         print ('text matches')
 
     def upload_success(self):
