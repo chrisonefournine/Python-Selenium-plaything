@@ -9,4 +9,5 @@ class TestFileUpload():
 
     @pytest.mark.shallow
     def test_upload_success(self, upload):
+        upload.upload_file()
         assert upload.upload_success() == True
