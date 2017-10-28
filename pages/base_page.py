@@ -1,6 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver import ActionChains
 from tests import config
 
 class BasePage():
@@ -44,6 +45,13 @@ class BasePage():
 
     def _verify_text(self, locator):
         return self._find(locator).text
+
+    def _drag_element(self, element, target):
+        drag_drop = ActionChains(self.driver)
+        drag_drop.drag_and_drop(element, target).perform()
+
+
+
 
 
 
