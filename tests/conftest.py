@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 import os
+import tempfile
 from tests import config
 
 
@@ -34,20 +35,20 @@ def pytest_addoption(parser):
                      default="1600x1200",
                      help="the screen resolution you want to test with")
 
-
-# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-# def pytest_runtest_makereport(item, call):
-#     """
-#     grab the test outcome and store the result
-#     add the result for each phase of a call ("setup", "call", and "teardown")
-#     as an attribute to the request.node object in a fixture
-#     e.g.,
-#         request.node.result_call.failed
-#         request.node.result_call.passed
-#     """
-#     outcome = yield
-#     result = outcome.get_result()
-#     setattr(item, "result_" + result.when, result)
+@pytest.fixture
+def firefox_options(request, firefox_options):
+    args = request.node.get_marker('firefox_arguments')
+    if args is not None:
+        for arg in args.args:
+            firefox_options.add_argument(arg)
+    #self.download_dir = tempfile.mkdtemp()
+    #firefox_options.add_argument('-foreground')
+    #firefox_options.add_argument("browser.download.dir", self.download_dir)
+    #firefox_options.add_argument("browser.download.folderList", 2)
+    #firefox_options.add_argument("browser.helperApps.neverAsk.saveToDisk",
+     #       "images/jpeg, application/pdf, application/octet-stream")
+    #firefox_options.add_argument("pdfjs.disabled", True)
+    return firefox_options
 
 
 @pytest.fixture
@@ -79,16 +80,6 @@ def driver(request):
             _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
             driver_ = webdriver.Chrome(_chromedriver)
 
-    #def quit():
-    #     try:
-    #         if config.host == "browserstack":
-    #             yield
-    #             if request.node.result_call.failed:
-    #                 driver_.execute_script("BS:Job-Result=Failed")
-    #             elif request.node.result_call.passed:
-    #                 driver_.execute_script("BS:Job-result=Passed")
-    #    finally:
-    #   driver_.quit()
     def quit():
         driver_.quit()
 
