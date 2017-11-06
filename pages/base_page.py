@@ -2,6 +2,7 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import ActionChains
+from selenium.webdriver.support.select import Select as WebDriverSelect
 from tests import config
 
 class BasePage():
@@ -49,6 +50,13 @@ class BasePage():
     def _drag_element(self, element, target):
         drag_drop = ActionChains(self.driver)
         drag_drop.drag_and_drop(element, target).perform()
+
+    def _select_dropdown(self, locator, option_number):
+        select_list = WebDriverSelect(locator)
+        select_list.select_by_visible_text(option_number)
+        selected_option = select_list.first_selected_option.text
+        return selected_option == (option_number), ("Selected option should be " + (option_number))
+
 
 
 
