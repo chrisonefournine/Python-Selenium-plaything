@@ -57,6 +57,9 @@ class BasePage():
         selected_option = select_list.first_selected_option.text
         return selected_option == (option_number), ("Selected option should be " + (option_number))
 
+    def _switch_frame(self, locator):
+        self.driver.switch_to_frame(locator)
+
 
 
 
