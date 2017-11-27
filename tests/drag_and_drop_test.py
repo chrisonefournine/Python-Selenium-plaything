@@ -10,4 +10,4 @@ class TestDragDrop():
         return drag_drop_page.DragDropPage(driver)
 
     def test_dragdrop(self, dragging):
-        assert dragging.drag_a_to_b() == True
+        assert dragging.drag_a_to_b() == "A"

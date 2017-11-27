@@ -14,11 +14,15 @@ class DragDropPage(BasePage):
         assert self._is_displayed(self._column_b)
 
     def drag_a_to_b(self):
-        self._drag_element(self._column_a, self._column_b)
+        a = self.driver.find_element(**self._column_a)
+        b = self.driver.find_element(**self._column_b)
+        self._drag_element(a, b)
         time.sleep(1)
-        return self._verify_text(self._column_b) == "A"
+        return self._verify_text(self._column_b)
 
     def drag_b_to_a(self):
-        self._drag_element(self._column_b, self._column_a)
+        a = self.driver.find_element(**self._column_a)
+        b = self.driver.find_element(**self._column_b)
+        self._drag_element(b, a)
         time.sleep(1)
-        return self._verify_text(self._column_b) == "B"
+        return self._verify_text(self._column_b)

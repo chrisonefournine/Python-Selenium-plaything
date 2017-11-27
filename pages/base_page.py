@@ -49,7 +49,7 @@ class BasePage():
 
     def _drag_element(self, element, target):
         drag_drop = ActionChains(self.driver)
-        drag_drop.drag_and_drop(element, target).perform()
+        drag_drop.click_and_hold(element).move_by_offset(-1, -1).move_to_element(target).release().perform()
 
     def _select_dropdown(self, locator, option_number):
         select_list = WebDriverSelect(locator)
@@ -57,6 +57,11 @@ class BasePage():
         selected_option = select_list.first_selected_option.text
         return selected_option == (option_number), ("Selected option should be " + (option_number))
 
+    def _switch_frame(self, locator):
+        self.driver.switch_to_frame(locator)
+
+    def _is_enabled(self, locator):
+        return self._find(locator).is_enabled
 
 
 
