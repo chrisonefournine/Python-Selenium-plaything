@@ -12,6 +12,7 @@ class Dropdown(BasePage):
 
     def click_dropdown(self, option_number):
         dropdown_element = self.driver.find_element(**self._dropdown)
+        # assert dropdown_element[0].is_enabled() == True
         return self._select_dropdown(dropdown_element, option_number)
 
 

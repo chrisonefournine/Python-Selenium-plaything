@@ -60,6 +60,8 @@ class BasePage():
     def _switch_frame(self, locator):
         self.driver.switch_to_frame(locator)
 
+    def _is_enabled(self, locator):
+        return self._find(locator).is_enabled
 
 
 
