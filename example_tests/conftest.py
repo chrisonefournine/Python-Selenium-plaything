@@ -8,11 +8,11 @@ from example_tests import config
 def pytest_addoption(parser):
     parser.addoption("--baseurl",
                      action="store",
-                     default='http://www.bbc.co.uk/food',
+                     default='http://the-internet.herokuapp.com',
                      help="base url for the application under test")
     parser.addoption("--browser",
                      action="store",
-                     default="chrome",
+                     default="firefox",
                      help="the name of the browser you want to test with")
     parser.addoption("--host",
                      action="store",
@@ -32,7 +32,7 @@ def pytest_addoption(parser):
                      help="the OS version you want to test with")
     parser.addoption("--resolution",
                      action="store",
-                     default="1280x800",
+                     default="1600x1200",
                      help="the screen resolution you want to test with")
 
 @pytest.fixture
