@@ -49,7 +49,7 @@ class BasePage():
             wait.until(
                 expected_conditions.visibility_of_element_located(
                     (locator['by'], locator['value'])))
-        except TimeoutException:
+        except TimeoutException("The element could not be found afe=ter waiting %s seconds" % timeout):
             return False
         return True
 

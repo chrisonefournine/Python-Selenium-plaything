@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 import os
 import tempfile
 from example_tests import config
@@ -61,27 +62,33 @@ def driver(request):
     config.osversion = request.config.getoption("--osversion")
     config.resolution = request.config.getoption("--resolution")
 
-    if config.host == "browserstack":
-        _desired_caps = {}
-        _desired_caps["browser"] = config.browser
-        _desired_caps["browser_version"] = config.browserversion
-        _desired_caps["os"] = config.os
-        _desired_caps["os_version"] = config.osversion
-        _desired_caps["resolution"] = config.resolution
-        _desired_caps["project"] = "Selenium Playground"
-        _desired_caps["name"] = request.cls.__name__ + "." + request.function.__name__
-        _url = "http://chrisharris20:wptzYxQAL2ZsLYtCuzaq@hub.browserstack.com:80/wd/hub"
-        driver_ = webdriver.Remote(_url, _desired_caps)
-    elif config.host == "localhost":
-        if config.browser == "firefox":
-            _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver')
-            driver_ = webdriver.Firefox(executable_path=_geckodriver)
-        elif config.browser == "chrome":
-            _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
-            driver_ = webdriver.Chrome(_chromedriver)
+    try:
+        if config.host == "browserstack":
+            _desired_caps = {}
+            _desired_caps["browser"] = config.browser
+            _desired_caps["browser_version"] = config.browserversion
+            _desired_caps["os"] = config.os
+            _desired_caps["os_version"] = config.osversion
+            _desired_caps["resolution"] = config.resolution
+            _desired_caps["project"] = "Selenium Playground"
+            _desired_caps["name"] = request.cls.__name__ + "." + request.function.__name__
+            _url = "http://chrisharris20:wptzYxQAL2ZsLYtCuzaq@hub.browserstack.com:80/wd/hub"
+            driver_ = webdriver.Remote(_url, _desired_caps)
+        elif config.host == "localhost":
+            if config.browser == "firefox":
+                _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver')
+                driver_ = webdriver.Firefox(executable_path=_geckodriver)
+            elif config.browser == "chrome":
+                _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
+                driver_ = webdriver.Chrome(_chromedriver)
 
-    def quit():
-        driver_.quit()
+        def quit():
+            driver_.quit()
 
-    request.addfinalizer(quit)
-    return driver_
+        request.addfinalizer(quit)
+        return driver_
+    except WebDriverException as e:
+            if "executable needs to be in PATH" in str(e):
+                print("Please provide path for driver executable")
+            elif "Expected browser binary location" in str(e):
+                print("Please provide path of driver executable")
