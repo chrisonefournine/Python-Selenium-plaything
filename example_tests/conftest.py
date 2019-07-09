@@ -74,10 +74,10 @@ def driver(request):
         driver_ = webdriver.Remote(_url, _desired_caps)
     elif config.host == "localhost":
         if config.browser == "firefox":
-            _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver')
+            _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver.exe')
             driver_ = webdriver.Firefox(executable_path=_geckodriver)
         elif config.browser == "chrome":
-            _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
+            _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver.exe')
             driver_ = webdriver.Chrome(_chromedriver)
 
     def quit():

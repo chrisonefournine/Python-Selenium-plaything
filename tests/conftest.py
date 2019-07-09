@@ -3,13 +3,13 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 import os
 import tempfile
-from example_tests import config
+from tests import config
 
 
 def pytest_addoption(parser):
     parser.addoption("--baseurl",
                      action="store",
-                     default='http://www.bbc.co.uk/food',
+                     default="https://2019.hep1undergrad.apply.ucasenvironments.com/",
                      help="base url for the application under test")
     parser.addoption("--browser",
                      action="store",
@@ -33,7 +33,7 @@ def pytest_addoption(parser):
                      help="the OS version you want to test with")
     parser.addoption("--resolution",
                      action="store",
-                     default="1280x800",
+                     default="1600x1200",
                      help="the screen resolution you want to test with")
 
 @pytest.fixture
@@ -76,11 +76,11 @@ def driver(request):
             driver_ = webdriver.Remote(_url, _desired_caps)
         elif config.host == "localhost":
             if config.browser == "firefox":
-                _geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver')
-                driver_ = webdriver.Firefox(executable_path=_geckodriver)
+                #_geckodriver = os.path.join(os.getcwd(), 'vendor', 'geckodriver.exe')
+                driver_ = webdriver.Firefox()
             elif config.browser == "chrome":
-                _chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver')
-                driver_ = webdriver.Chrome(_chromedriver)
+                #_chromedriver = os.path.join(os.getcwd(), 'vendor', 'chromedriver.exe')
+                driver_ = webdriver.Chrome()
 
         def quit():
             driver_.quit()
@@ -89,6 +89,7 @@ def driver(request):
         return driver_
     except WebDriverException as e:
             if "executable needs to be in PATH" in str(e):
-                print("Please provide path for driver executable")
+                print("I cant find your driver, do is need to be in your path or is the specified path okay?")
             elif "Expected browser binary location" in str(e):
-                print("Please provide path of driver executable")
+                print("Problem with expected binary localtion")
+
